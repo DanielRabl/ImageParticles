@@ -59,10 +59,9 @@ struct main_state : qsf::base_state {
 			auto x = std::cos(angle);
 			auto y = std::sin(angle);
 
-			auto element = qpl::random_element(pixels);
-			i.position = element;
-			i.color = image.getPixel(element.x, element.y);
-			auto diff = this->center() - i.position;
+			auto pos = qpl::random_element(pixels);
+			i.position = pos;
+			i.color = image.getPixel(pos.x, pos.y);
 			i.velocity = qpl::random(qpl::vector2f(-1, -1), qpl::vector2f(1, 1));
 		}
 	}
