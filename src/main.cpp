@@ -38,17 +38,15 @@ struct main_state : qsf::base_state {
 				auto c = image.getPixel(x, y);
 				auto sum = c.r + c.g + c.b;
 				if (sum < (250 * 3)) {
-					pixels.push_back(qpl::vector2f(x, y));
+					pixels.push_back(qpl::vec(x, y));
 				}
 			}
 		}
 
 		auto particle_size = 500'000;
 
-		auto vel_mul = 2.0;
-		auto speed_mul = 2.0;
-		this->vel_gen.set_random_range(5.0 * vel_mul, 30.0 * vel_mul);
-		this->speed_gen.set_random_range(2.0 * speed_mul, 4.0 * speed_mul);
+		this->cubic_velocity_gen.set_random_range(10.0, 60.0);
+		this->cubic_speed_gen.set_random_range(4.0, 8.0);
 
 		this->va.resize(particle_size);
 		this->particles.resize(particle_size);
@@ -63,14 +61,14 @@ struct main_state : qsf::base_state {
 	}
 	void updating() override {
 		auto f = this->frame_time().secs_f();
-		this->vel_gen.update(f);
-		this->speed_gen.update(f);
+		this->cubic_velocity_gen.update(f);
+		this->cubic_speed_gen.update(f);
 
 		update_state state;
 		state.frame_time = f;
 		state.mouse_position = this->event->mouse_position();
-		state.vel_div = this->vel_gen.get();
-		state.speed = this->speed_gen.get();
+		state.vel_div = this->cubic_velocity_gen.get();
+		state.speed = this->cubic_speed_gen.get();
 
 		for (auto& i : this->particles) {
 			i.update(state);
@@ -86,8 +84,8 @@ struct main_state : qsf::base_state {
 
 	qsf::vertex_array va;
 	std::vector<particle> particles;
-	qpl::cubic_generator vel_gen;
-	qpl::cubic_generator speed_gen;
+	qpl::cubic_generator cubic_velocity_gen;
+	qpl::cubic_generator cubic_speed_gen;
 };
 
 int main() {
