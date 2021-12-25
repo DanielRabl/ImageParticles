@@ -12,7 +12,7 @@ struct particle {
 	qpl::vector2f position;
 	qsf::rgb color;
 
-	void update(update_tate state) {
+	void update(update_state state) {
 		auto diff = state.mouse_position - this->position;
 
 		auto length = std::sqrt((diff.x * diff.x) + (diff.y * diff.y));
