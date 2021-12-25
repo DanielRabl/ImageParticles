@@ -55,10 +55,6 @@ struct main_state : qsf::base_state {
 		this->va.set_primitive_type(qsf::primitive_type::points);
 
 		for (auto& i : this->particles) {
-			auto angle = qpl::random(qpl::pi * 2);
-			auto x = std::cos(angle);
-			auto y = std::sin(angle);
-
 			auto pos = qpl::random_element(pixels);
 			i.position = pos;
 			i.color = image.getPixel(pos.x, pos.y);
