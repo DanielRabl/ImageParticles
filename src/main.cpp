@@ -1,6 +1,6 @@
 #include <qpl/qpl.hpp>
 
-struct update_tate {
+struct update_state {
 	qpl::vector2i mouse_position;
 	qpl::f64 frame_time;
 	qpl::f64 vel_div = 10.0;
@@ -71,7 +71,7 @@ struct main_state : qsf::base_state {
 		this->vel_gen.update(f);
 		this->speed_gen.update(f);
 
-		update_tate state;
+		update_state state;
 		state.frame_time = f;
 		state.mouse_position = this->event->mouse_position();
 		state.vel_div = this->vel_gen.get();
